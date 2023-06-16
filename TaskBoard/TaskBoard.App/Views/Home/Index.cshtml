@@ -1,0 +1,34 @@
+﻿@model HomeTasksViewModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="text-center">
+        <h1 class="display-4">Task Board: A Board for Your Tasks</h1>
+        <hr />
+        <h1><strong>Welcome, @User?.Identity?.Name!</strong></h1>
+        <hr />
+        <h3><strong>TaskBoard is here for all your tasks.</strong></h3>
+    </div>
+    <div>
+        <p>Your Tasks: <strong>@Model.TotalCount</strong></p>
+        <ul>
+            @foreach (var board in @Model.BoardsWithTasksCount)
+            {
+                <li>@board.BoardName: <strong>@board.TaskCount</strong></li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+}
